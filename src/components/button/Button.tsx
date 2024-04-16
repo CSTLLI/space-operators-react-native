@@ -1,18 +1,18 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react';
+import { TouchableOpacity, Text } from 'react-native';
 
 import { stylesButton } from './Button.style';
 
 interface Props {
     label: string;
     color?: string;
-    link?: string;
+    onPress?: () => void;
 }
 
-export const ButtonComponent = (ButtonProps: Props) => {
+export const ButtonComponent: React.FC<Props> = ({ label, color, onPress }) => {
   return (
-    <View style={stylesButton.container}>
-        <Text>{ButtonProps.label}</Text>
-    </View>
-  )
-}
+    <TouchableOpacity style={stylesButton.container} onPress={onPress}>
+        <Text style={{ color: 'white'}}>{label}</Text>
+    </TouchableOpacity>
+  );
+};

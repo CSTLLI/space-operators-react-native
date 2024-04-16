@@ -1,13 +1,45 @@
 import React from 'react'
-import { View } from 'react-native'
-import {styles} from "./Home.style";
+import { View, ImageBackground, Image } from 'react-native'
+import { ButtonComponent } from '../../components/button/Button';
 
-export const Home = () => {
-  return (
-    <View style={styles.container}>
+import { styles } from "./Home.style";
 
-    </View>
-  )
+import Background from "../../assets/bg_home.png";
+import Title from "../../assets/title.png"
+
+export const ButtonsList = [
+	{
+		"title": "Créer une partie",
+		"href": "CreateGame"
+	},
+	{
+		"title": "Rejoindre une partie",
+		"href": "JoinGame"
+	},
+	{
+		"title": "Historique",
+		"href": "History"
+	},
+	{
+		"title": "Quitter",
+		"href": "Quitter"
+	}
+]
+
+export const HomeScreen = () => {
+	return (
+		<ImageBackground source={Background} resizeMode="stretch" style={styles.container}>
+			<View style={styles.container2}>
+				<Image alt="Logo" source={Title} />
+
+				<View>
+					{ButtonsList.map((button, index) => (
+						<ButtonComponent key={index} label={button.title} /*onPress={() => navigation.navigate(button.href)}*//>
+					))}
+				</View>
+			</View>
+		</ImageBackground>
+	)
 }
 
 
