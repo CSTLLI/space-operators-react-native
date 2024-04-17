@@ -1,28 +1,21 @@
 import React from 'react';
-import { NativeRouter, Routes, Route } from "react-router-native";
-import AppLoading from 'expo-app-loading';
-import { useFonts, BowlbyOneSC_400Regular } from '@expo-google-fonts/bowlby-one-sc';
+import {NativeRouter, Routes, Route} from "react-router-native";
 
-import { HomeScreen } from './src/pages/Home/Home';
-import { CreateGameScreen } from './src/pages/CreateGame/CreateGame';
+import {HomeScreen} from './src/pages/Home/Home';
+// import { CreateGameScreen } from './src/pages/CreateGame/CreateGame';
 
 const App = () => {
-	let [fontsLoaded] = useFonts({
-		BowlbyOneSC_400Regular,
-	});
+    // let [fontsLoaded] = useFonts({
+    // 	BowlbyOneSC_400Regular,
+    // });
+    return (
+        <NativeRouter>
+            <Routes>
+                <Route path="/" Component={HomeScreen}/>
+                {/*<Route path="/create" Component={CreateGameScreen} />*/}
+            </Routes>
+        </NativeRouter>
+    )
+}
 
-	if (!fontsLoaded) {
-		return <AppLoading />;
-	} else {
-
-		return (
-			<NativeRouter>
-				<Routes>
-					<Route path="/" Component={HomeScreen} />
-					<Route path="/create" Component={CreateGameScreen} />
-				</Routes>
-			</NativeRouter>
-		)
-	}}
-
-	export default App;
+export default App;
