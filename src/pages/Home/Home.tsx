@@ -4,8 +4,8 @@ import { ButtonComponent } from '../../components/button/Button';
 
 import { styles } from "./Home.style";
 
-// import Background from "../../assets/bg_home.png";
-// import Title from "../../assets/title.png"
+import Background from "../../assets/bg_home.png";
+import Title from "../../assets/title.png"
 
 export const ButtonsList = [
 	{
@@ -28,9 +28,9 @@ export const ButtonsList = [
 
 export const HomeScreen = () => {
 	return (
-		<ImageBackground  resizeMode="stretch" style={styles.container}>
+		<ImageBackground source={Background} resizeMode="stretch" style={styles.container}>
 			<View style={styles.container2}>
-				<Image alt="Logo" />
+				<Image alt="Logo" source={Title} />
 
 				<View>
 					{ButtonsList.map((button, index) => (
