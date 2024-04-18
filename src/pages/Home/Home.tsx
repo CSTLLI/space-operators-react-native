@@ -1,40 +1,40 @@
 import React from 'react'
 import { View, ImageBackground, Image } from 'react-native'
-import { ButtonComponent } from '@/components/button/Button';
+import { LinkComponent } from '@/components/button/Button';
 import { PseudoComponent } from '@/components/pseudo/Pseudo';
 
 import { styles } from "./Home.style";
-import { Background, Title } from "@/utils/pictures"
+import { BackgroundHome, Title } from "@/utils/pictures"
 
 export const ButtonsList = [
 	{
 		"title": "Créer une partie",
-		"href": "CreateGame"
+		"href": "/create"
 	},
 	{
 		"title": "Rejoindre une partie",
-		"href": "JoinGame"
+		"href": "/join"
 	},
 	{
 		"title": "Historique",
-		"href": "History"
+		"href": "/history"
 	},
 	{
 		"title": "Quitter",
-		"href": "Quitter"
+		"href": "/exit"
 	}
 ]
 
 export const HomeScreen = () => {
 	return (
-		<ImageBackground source={Background} resizeMode="cover" style={styles.containerImg}>
+		<ImageBackground source={BackgroundHome} resizeMode="cover" style={styles.containerImg}>
 			<View style={styles.containerItems}>
 				<Image alt="Logo" resizeMode="contain" source={Title} />
 
 				<View style={styles.containerButtons}>
 					<PseudoComponent />
 					{ButtonsList.map((button, index) => (
-						<ButtonComponent key={index} label={button.title} /*onPress={() => navigation.navigate(button.href)}*//>
+						<LinkComponent key={index} label={button.title} toPath={button.href}/>
 					))}
 				</View>
 			</View>
