@@ -1,11 +1,10 @@
 import React from 'react'
 import { View, ImageBackground, Image } from 'react-native'
-import { ButtonComponent } from '../../components/button/Button';
+import { ButtonComponent } from '@/components/button/Button';
+import { PseudoComponent } from '@/components/pseudo/Pseudo';
 
 import { styles } from "./Home.style";
-
-import Background from "../../assets/bg_home.png";
-import Title from "../../assets/title.png"
+import { Background, Title } from "@/utils/pictures"
 
 export const ButtonsList = [
 	{
@@ -28,11 +27,12 @@ export const ButtonsList = [
 
 export const HomeScreen = () => {
 	return (
-		<ImageBackground source={Background} resizeMode="stretch" style={styles.container}>
-			<View style={styles.container2}>
-				<Image alt="Logo" source={Title} />
+		<ImageBackground source={Background} resizeMode="cover" style={styles.containerImg}>
+			<View style={styles.containerItems}>
+				<Image alt="Logo" resizeMode="contain" source={Title} />
 
-				<View>
+				<View style={styles.containerButtons}>
+					<PseudoComponent />
 					{ButtonsList.map((button, index) => (
 						<ButtonComponent key={index} label={button.title} /*onPress={() => navigation.navigate(button.href)}*//>
 					))}

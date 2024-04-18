@@ -9,11 +9,18 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/bowlby-one-sc": "^0.2.3",
     "expo": "~50.0.13",
+    "expo-app-loading": "^2.1.1",
     "expo-font": "^11.10.3",
     "react": "18.2.0",
     "react-native": "0.73.6",
-    "react-router-native": "^6.22.3"
+    "react-native-get-random-values": "^1.11.0",
+    "react-native-svg": "^15.1.0",
+    "react-native-vector-icons": "^10.0.3",
+    "react-router-native": "^6.22.3",
+    "uuid": "^9.0.1",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

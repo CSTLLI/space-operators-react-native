@@ -1,6 +1,5 @@
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
-
 import { stylesButton } from './Button.style';
 
 interface Props {
@@ -12,7 +11,7 @@ interface Props {
 export const ButtonComponent: React.FC<Props> = ({ label, color, onPress }) => {
   return (
     <TouchableOpacity style={stylesButton.container} onPress={onPress}>
-        <Text style={{ color: 'white'}}>{label}</Text>
+        <Text style={stylesButton.text}>{label}</Text>
     </TouchableOpacity>
   );
 };

@@ -4,3 +4,11 @@ export const colors = {
     greenColor: '#73A472',
     orangeColor: '#E48F2C',
 }
+
+export const pseudoRandoms = [
+    'Mazaki',
+    'RED',
+    'Pierro',
+    'MB',
+    'CSTLLI'
+]

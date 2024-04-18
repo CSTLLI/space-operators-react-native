@@ -11,6 +11,20 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "packagerOpts": {
+      "config": {
+        "projectRoot": "./",
+        "baseUrl": "./",
+        "paths": {
+          "@/*": [
+            "src/*"
+          ],
+          "@assets/*": [
+            "src/assets/*"
+          ]
+        }
+      }
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
