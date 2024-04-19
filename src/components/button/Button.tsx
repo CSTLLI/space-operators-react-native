@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { Link, To } from 'react-router-native';
 import { stylesButton } from './Button.style';
-import { colors } from '@/utils/const';
+import { colors } from '@/lib/const';
 
 interface LinkProps {
 	label: string;

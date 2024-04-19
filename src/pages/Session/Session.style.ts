@@ -1,4 +1,4 @@
-import { colors } from "@/utils/const";
+import { colors } from "@/lib/const";
 import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
 	containerImg: {

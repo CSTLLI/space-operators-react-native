@@ -4,7 +4,7 @@ import { LinkComponent } from '@/components/button/Button';
 import { PseudoComponent } from '@/components/pseudo/Pseudo';
 
 import { styles } from "./Home.style";
-import { BackgroundHome, Title } from "@/utils/pictures"
+import { BackgroundHome, Title } from "@/lib/pictures"
 import useUser from '@/stores/User.store';
 
 export const ButtonsList = [

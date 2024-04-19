@@ -9,11 +9,11 @@ interface GameState {
     setPlayers: (players: UserState[]) => void;
 }
 
-const useUser = create<GameState>((set) => ({
+const useGame = create<GameState>((set) => ({
     serverId: 0,
     players: [],
     setServerId: (newServerId: number) => set({serverId: newServerId}),
     setPlayers: (newPlayers: UserState[]) => set({players: newPlayers})
 }))
 
-export default useUser;
+export default useGame;

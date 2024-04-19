@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { styles } from './Pseudo.style';
-import { pseudoRandoms } from '@/utils/const';
+import { pseudoRandoms } from '@/lib/const';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import useUser from '@/stores/User.store';
