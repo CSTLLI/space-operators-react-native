@@ -19,6 +19,7 @@ const App = () => {
                 <Routes>
                     <Route path="/" Component={HomeScreen} />
                     <Route path="/create" Component={SessionScreen} />
+                    <Route path="/join" Component={SessionScreen} />
                 </Routes>
             </NativeRouter>
         )

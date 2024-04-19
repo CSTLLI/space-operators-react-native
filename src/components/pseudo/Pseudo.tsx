@@ -7,12 +7,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import useUser from '@/stores/User.store';
 
 export const PseudoComponent = () => {
-    const { pseudo, setPseudo, uuid } = useUser();
+    const { pseudo, setPseudo, uuid} = useUser();
 
     const onChangeText = (newPseudo: string) => {
         setPseudo(newPseudo);
     }
-
+    
     const generateRandomPseudo = () => {
         const randomIndex = Math.floor(Math.random() * pseudoRandoms.length);
         const randomPseudo = pseudoRandoms[randomIndex];
