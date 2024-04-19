@@ -1,19 +1,23 @@
 import { create } from "zustand";
-import 'react-native-get-random-values';
-import { UserState } from "./User.store";
+import "react-native-get-random-values";
+
+export interface PlayerState {
+	playerName: string;
+	status: boolean;
+}
 
 interface GameState {
-    serverId: number
-    setServerId: (serverId: number) => void;
-    players: UserState[];
-    setPlayers: (players: UserState[]) => void;
+	gameId: string;
+	setGameId: (gameId: string) => void;
+	players: PlayerState[];
+	updatePlayers: (players: PlayerState[]) => void;
 }
 
 const useGame = create<GameState>((set) => ({
-    serverId: 0,
-    players: [],
-    setServerId: (newServerId: number) => set({serverId: newServerId}),
-    setPlayers: (newPlayers: UserState[]) => set({players: newPlayers})
-}))
+	gameId: '00aa11bb',
+	players: [],
+	setGameId: (newGameId: string) => set({ gameId: newGameId }),
+	updatePlayers: (newPlayers: PlayerState[]) => set({players: newPlayers}),
+}));
 
 export default useGame;

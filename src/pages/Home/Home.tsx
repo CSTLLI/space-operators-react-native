@@ -6,6 +6,8 @@ import { PseudoComponent } from '@/components/pseudo/Pseudo';
 import { styles } from "./Home.style";
 import { BackgroundHome, Title } from "@/lib/pictures"
 import useUser from '@/stores/User.store';
+import fetchApi from '@/lib/tools/api';
+import useGame from '@/stores/Game.store';
 
 export const ButtonsList = [
 	{
@@ -16,7 +18,6 @@ export const ButtonsList = [
 	{
 		"title": "Rejoindre une partie",
 		"href": "/join",
-		"isHost": false
 	},
 	{
 		"title": "Historique",
@@ -30,6 +31,17 @@ export const ButtonsList = [
 
 export const HomeScreen = () => {
 	const { setIsHost } = useUser()
+	const { setGameId } = useGame()
+
+	const createGame = async () => {
+		try {
+			await fetchApi('/create-game')
+				.then((res) => setGameId(res.id))
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	return (
 		<ImageBackground source={BackgroundHome} resizeMode="cover" style={styles.containerImg}>
 			<View style={styles.containerItems}>
@@ -38,7 +50,17 @@ export const HomeScreen = () => {
 				<View style={styles.containerButtons}>
 					<PseudoComponent />
 					{ButtonsList.map((button, index) => (
-						<LinkComponent key={index} label={button.title} toPath={button.href} onPress={() => setIsHost(button.isHost || false)} />
+						<LinkComponent
+							key={index}
+							label={button.title}
+							toPath={button.href}
+							onPress={() => {
+								if (button.href == '/create') {
+									createGame()
+								}
+								setIsHost(button.isHost || false)
+							}}
+						/>
 					))}
 				</View>
 			</View>

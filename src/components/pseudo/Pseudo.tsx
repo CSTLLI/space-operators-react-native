@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { styles } from './Pseudo.style';
-import { pseudoRandoms } from '@/lib/const';
+import { pseudoRandoms } from '@/lib/mock';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import useUser from '@/stores/User.store';
@@ -20,8 +20,8 @@ export const PseudoComponent = () => {
     }
 
     return (
-        <View style={{ alignContent: "center", alignItems: "center" }}>
-            <Text style={{ color: 'white' }}>{uuid}</Text>
+        <View style={{ alignItems: "center" }}>
+            <Text style={styles.label}>{uuid}</Text>
             <View style={styles.inputGlobal}>
                 <TextInput
                     placeholder="Entrez un pseudo"

@@ -18,14 +18,38 @@ export const styles = StyleSheet.create({
 		justifyContent: "space-between",
 	},
 	containerButtons: {
-		alignItems: "center",
+		justifyContent: 'flex-end',
 		alignSelf: "center",
-		gap: 8
+		gap: 8,
+		minHeight: 150,
 	},
 	containerList: {
 		width: 300,
-		height: 500,
+		minHeight: 500,
 		borderColor: colors.primaryColor,
-		borderWidth: 4
+		borderWidth: 4,
+		borderRadius: 5
+	},
+	playerElement: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		paddingVertical: 20,
+		paddingHorizontal: 25
+	},
+	player: {
+		color: 'white',
+		fontFamily: 'BowlbyOneSC_400Regular',
+	},
+	playerPoint: {
+		width: 25,
+		height: 25,
+		borderRadius: 50,
+	},
+	gameId: {
+		fontFamily: 'BowlbyOneSC_400Regular',
+        color: 'white',
+        marginBottom: 5,
+        fontSize: 11
 	}
 });

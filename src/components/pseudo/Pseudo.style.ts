@@ -4,7 +4,7 @@ import {colors} from "@/lib/const";
 export const styles = StyleSheet.create({
     input: {
         marginTop: 4,
-        paddingHorizontal: 4,
+        paddingLeft: 16, 
         paddingVertical: 10,
         width: 200,
         borderRadius: 5,
@@ -21,4 +21,10 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center'
     },
+    label: {
+        fontFamily: 'BowlbyOneSC_400Regular',
+        color: 'white',
+        marginBottom: 5,
+        fontSize: 11 
+    }
 });
