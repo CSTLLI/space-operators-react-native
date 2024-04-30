@@ -1,4 +1,4 @@
-export default async function fetchApi(
+export async function fetchApi(
 	url: string,
 	body?: object,
 	params?: { [keyof: string]: string },

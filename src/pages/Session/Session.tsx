@@ -9,17 +9,45 @@ import useGame, { PlayerState } from '@/stores/Game.store'
 import { colors } from '@/lib/const'
 import { randomPlayers } from '@/lib/mock'
 import { useEffect } from 'react'
+import { fetchApi } from '@/lib/tools/api'
+import useServer from '@/stores/Server.store'
+import { getResponseSocket, requestSocket } from '@/lib/services/websocket'
 
 export const SessionScreen = () => {
-	const { isHost, isReady, setIsReady } = useUser();
+	const { uuid, isHost, isReady, setIsReady } = useUser();
 	const { gameId, players, updatePlayers } = useGame();
+	const { ws } = useServer()
 
 	useEffect(() => {
-		updatePlayers(randomPlayers)
-	}, [])
+		if (ws && ws.readyState === WebSocket.OPEN) {
+			ws.onmessage = handleMessage;
+		}
+		return () => {
+			if (ws) {
+				ws.onmessage = null;
+			}
+		};
+	}, [ws, updatePlayers]);
 
-	const getReadyPlayers = (player: PlayerState) => {
+    const handleMessage = (event: MessageEvent) => {
+		// console.log(event)
+		const message = JSON.parse(event.data);
+		if (message.type === 'players') {
+			updatePlayers(message.data.players);
+		}
+	};
+
+	const getReadyPlayerColor = (player: PlayerState) => {
 		return player.status ? colors.greenColor : colors.primaryColor
+	}
+
+	const onPressReady = async () => {
+		try {
+			await fetchApi(`/ready/${uuid}`)
+		} catch (error) {
+			console.log(error)
+		}
+		setIsReady(true)
 	}
 
 	return (
@@ -28,20 +56,20 @@ export const SessionScreen = () => {
 				<ScrollView style={styles.containerList}>
 					{players.map((player, index) => (
 						<View key={index} style={styles.playerElement}>
-							<Text style={styles.player}>{player.playerName}</Text>
-							<View style={[styles.playerPoint, { backgroundColor: getReadyPlayers(player) }]}></View>
+							<Text style={styles.player}>{player.name}</Text>
+							<View style={[styles.playerPoint, { backgroundColor: getReadyPlayerColor(player) }]}></View>
 						</View>
 					))}
 				</ScrollView>
 				<View style={styles.containerButtons}>
 					{isHost ? (
-						<View style={{alignItems: "center" }}>
+						<View style={{ alignItems: "center" }}>
 							<Text style={styles.gameId}>Game ID: {gameId}</Text>
 							<ButtonComponent label="Démarrer la partie" onPress={() => ''} />
 						</View>
 					) : null}
 					<ReadyButtonComponent
-						onPress={() => setIsReady(!isReady)}
+						onPress={onPressReady}
 						label={isReady ? "Prêt" : "Pas prêt"}
 						color={isReady ? colors.greenColor : colors.primaryColor}
 					/>

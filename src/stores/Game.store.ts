@@ -2,7 +2,7 @@ import { create } from "zustand";
 import "react-native-get-random-values";
 
 export interface PlayerState {
-	playerName: string;
+	name: string;
 	status: boolean;
 }
 

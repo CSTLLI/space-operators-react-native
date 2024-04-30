@@ -1,13 +1,17 @@
-import React from 'react'
-import { View, ImageBackground, Image, Text } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, ImageBackground, Image } from 'react-native'
+
 import { LinkComponent } from '@/components/button/Button';
 import { PseudoComponent } from '@/components/pseudo/Pseudo';
-
 import { styles } from "./Home.style";
-import { BackgroundHome, Title } from "@/lib/pictures"
+
 import useUser from '@/stores/User.store';
-import fetchApi from '@/lib/tools/api';
 import useGame from '@/stores/Game.store';
+import useServer from '@/stores/Server.store';
+
+import { BackgroundHome, Title } from "@/lib/pictures"
+import { fetchApi } from '@/lib/tools/api';
+import { sendRequestSocket } from '@/lib/services/websocket';
 
 export const ButtonsList = [
 	{
@@ -30,16 +34,26 @@ export const ButtonsList = [
 ]
 
 export const HomeScreen = () => {
-	const { setIsHost } = useUser()
+	const { setIsHost, setIsReady, uuid, pseudo } = useUser()
 	const { setGameId } = useGame()
+	const ws = useServer(state => state.ws);
 
 	const createGame = async () => {
 		try {
-			await fetchApi('/create-game')
-				.then((res) => setGameId(res.id))
+			const { id: gameId } = await fetchApi('/create-game');
+			setGameId(gameId)
+			setIsReady(false)
+
+			await sendRequestSocket(ws, 'connect', {
+				gameId,
+				playerId: uuid,
+				playerName: pseudo
+			})
+			
 		} catch (error) {
 			console.log(error)
 		}
+
 	}
 
 	return (
