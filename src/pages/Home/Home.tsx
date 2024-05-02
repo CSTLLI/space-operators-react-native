@@ -12,7 +12,7 @@ import useServer from '@/stores/Server.store';
 import { BackgroundHome, Title } from "@/lib/pictures"
 import { fetchApi } from '@/lib/tools/api';
 import { sendRequestSocket } from '@/lib/services/websocket';
-import { Navigate, useNavigate } from 'react-router-native';
+import { useNavigate } from 'react-router-native';
 
 export const ButtonsList = [
 	{
@@ -26,7 +26,7 @@ export const ButtonsList = [
 	},
 	{
 		"title": "Historique",
-		"href": "/history"
+		"href": "/game"
 	},
 	{
 		"title": "Quitter",
@@ -63,13 +63,17 @@ export const HomeScreen = () => {
 		try {
 			setIsReady(false)
 			
-			await sendRequestSocket(ws, 'connect', {
-				gameId,
-				playerId: uuid,
-				playerName: pseudo
-			})
-			.then(res => console.log(res))
+			const res = await sendRequestSocket(
+				ws, 
+				'connect', 
+				{
+					gameId,
+					playerId: uuid,
+					playerName: pseudo
+				})
+			console.log(res)
 			navigate('/join')
+
 
 		} catch (error) {
 			console.log(error)

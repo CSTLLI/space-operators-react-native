@@ -28,10 +28,12 @@ export const SessionScreen = () => {
 	}, [ws, updatePlayers]);
 
     const handleMessage = (event: MessageEvent) => {
-		// console.log(event)
-		const message = JSON.parse(event.data);
-		if (message.type === 'players') {
-			updatePlayers(message.data.players);
+		console.log(event)
+		if (event.data != "ping") {
+			const message = JSON.parse(event.data);
+			if (message.type === 'players') {
+				updatePlayers(message.data.players);
+			}
 		}
 	};
 

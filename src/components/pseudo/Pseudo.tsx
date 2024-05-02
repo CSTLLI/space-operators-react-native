@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { styles } from './Pseudo.style';
 import { pseudoRandoms } from '@/lib/mock';
 import Icon from 'react-native-vector-icons/Ionicons';
