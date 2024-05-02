@@ -3,7 +3,6 @@ import {colors} from "@/lib/const";
 
 export const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 20,
         position: 'relative'
     },
     bar: {
@@ -16,8 +15,7 @@ export const styles = StyleSheet.create({
     barFull: {
         backgroundColor: 'white',
         height: 15,
-        width: 325,
-        borderRadius: 50
+        borderRadius: 50,
     },
     rocket: {
         position: 'absolute',

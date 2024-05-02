@@ -7,7 +7,9 @@ import { colors } from "@/lib/const"
 export const ProgressBarComponent = ({
     value: number
 }) => {
-    const getWidthValue = (value: number) => (value/100)*325
+    const width = 370;
+
+    const getWidthValue = (value: number) => (value/100)*width
     const getPositionRocket = (value: number) => getWidthValue(value)-65
 
     const getColorProgressBar = (value: number) => {

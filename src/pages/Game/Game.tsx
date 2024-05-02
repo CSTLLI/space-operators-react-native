@@ -26,7 +26,7 @@ export const GameScreen = () => {
 						<Text style={styles.label}>Phase 1</Text>
 						<Text style={styles.label}>00:30</Text>
 					</View>
-					<ProgressBarComponent value={85}/>
+					<ProgressBarComponent value={50}/>
 				</View>
 			</View>
 		</ImageBackground>

@@ -17,11 +17,11 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   containerInfos: {
-    backgroundColor: "blue",
+    // backgroundColor: "blue",
     gap: 10,
   },
   infos: {
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     flexDirection: 'row',
     justifyContent: "space-between",
   },
