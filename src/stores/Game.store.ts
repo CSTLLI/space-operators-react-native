@@ -8,16 +8,22 @@ export interface PlayerState {
 
 interface GameState {
 	gameId: string;
-	setGameId: (gameId: string) => void;
+	turns: number;
 	players: PlayerState[];
+	setGameId: (gameId: string) => void;
 	updatePlayers: (players: PlayerState[]) => void;
+	nextTurn: () => void;
+	resetTurn: () => void;
 }
 
 const useGame = create<GameState>((set) => ({
 	gameId: '00aa11bb',
+	turns: 0,
 	players: [],
 	setGameId: (newGameId: string) => set({ gameId: newGameId }),
 	updatePlayers: (newPlayers: PlayerState[]) => set({players: newPlayers}),
+	nextTurn: () => set(state => ({turns: state.turns + 1})),
+	resetTurn: () => set({ turns: 0})
 }));
 
 export default useGame;
