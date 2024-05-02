@@ -5,6 +5,7 @@ import AppLoading from 'expo-app-loading';
 
 import { HomeScreen } from './src/pages/Home/Home';
 import { SessionScreen } from './src/pages/Session/Session'
+import { GameScreen } from './src/pages/Game/Game'
 
 import useServer from "./src/stores/Server.store";
 import { initWebSocket } from "./src/lib/services/websocket";
@@ -29,6 +30,7 @@ const App = () => {
                     <Route path="/" Component={HomeScreen} />
                     <Route path="/create" Component={SessionScreen} />
                     <Route path="/join" Component={SessionScreen} />
+                    <Route path="/game" Component={GameScreen} />
                 </Routes>
             </NativeRouter>
         )
