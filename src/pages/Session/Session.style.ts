@@ -19,6 +19,7 @@ export const styles = StyleSheet.create({
 	},
 	containerButtons: {
 		justifyContent: 'flex-end',
+		alignItems: 'center',
 		alignSelf: "center",
 		gap: 8,
 		minHeight: 150,

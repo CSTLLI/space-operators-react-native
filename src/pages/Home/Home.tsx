@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
-import { View, ImageBackground, Image } from 'react-native'
+import React, { useState } from 'react'
+import { View, ImageBackground, Image, Modal, TextInput } from 'react-native'
 
-import { LinkComponent } from '@/components/button/Button';
+import { ButtonComponent, LinkComponent } from '@/components/button/Button';
 import { PseudoComponent } from '@/components/pseudo/Pseudo';
 import { styles } from "./Home.style";
 
@@ -12,6 +12,7 @@ import useServer from '@/stores/Server.store';
 import { BackgroundHome, Title } from "@/lib/pictures"
 import { fetchApi } from '@/lib/tools/api';
 import { sendRequestSocket } from '@/lib/services/websocket';
+import { Navigate, useNavigate } from 'react-router-native';
 
 export const ButtonsList = [
 	{
@@ -21,7 +22,7 @@ export const ButtonsList = [
 	},
 	{
 		"title": "Rejoindre une partie",
-		"href": "/join",
+		"action": "joinGame",
 	},
 	{
 		"title": "Historique",
@@ -34,9 +35,12 @@ export const ButtonsList = [
 ]
 
 export const HomeScreen = () => {
+	const [modalVisible, setModalVisible] = useState(false)
+
 	const { setIsHost, setIsReady, uuid, pseudo } = useUser()
-	const { setGameId } = useGame()
+	const { setGameId, gameId } = useGame()
 	const ws = useServer(state => state.ws);
+	const navigate = useNavigate()
 
 	const createGame = async () => {
 		try {
@@ -49,37 +53,90 @@ export const HomeScreen = () => {
 				playerId: uuid,
 				playerName: pseudo
 			})
-			
 		} catch (error) {
 			console.log(error)
 		}
 
 	}
 
+	const joinGame = async () => {
+		try {
+			setIsReady(false)
+			
+			await sendRequestSocket(ws, 'connect', {
+				gameId,
+				playerId: uuid,
+				playerName: pseudo
+			})
+			.then(res => console.log(res))
+			navigate('/join')
+
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	return (
 		<ImageBackground source={BackgroundHome} resizeMode="cover" style={styles.containerImg}>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={modalVisible}
+				onRequestClose={() => setModalVisible(false)}
+			>
+				<View style={styles.centeredView}>
+					<View style={styles.modalView}>
+						<View style={styles.containerButtons}>
+							<PseudoComponent uuidVisible={false} />
+							<TextInput
+								placeholder="Serveur ID"
+								placeholderTextColor="#808080"
+								value={gameId}
+								onChangeText={(event: any) => {setGameId(event.toLowerCase())}}
+								style={styles.input}
+							/>
+						</View>
+						<View style={styles.containerButtons}>
+							<ButtonComponent label="Rejoindre" onPress={joinGame} />
+							<ButtonComponent label="Retour" onPress={() => setModalVisible(false)} />
+						</View>
+					</View>
+				</View>
+			</Modal>
 			<View style={styles.containerItems}>
 				<Image alt="Logo" resizeMode="contain" source={Title} />
 
 				<View style={styles.containerButtons}>
 					<PseudoComponent />
 					{ButtonsList.map((button, index) => (
-						<LinkComponent
-							key={index}
-							label={button.title}
-							toPath={button.href}
-							onPress={() => {
-								if (button.href == '/create') {
-									createGame()
-								}
-								setIsHost(button.isHost || false)
-							}}
-						/>
+						button.action ? (
+							<ButtonComponent
+								key={index}
+								label={button.title}
+								onPress={() => {
+									if (button.action === 'joinGame') {
+										setModalVisible(true)
+									}
+									setIsHost(button.isHost || false);
+								}}
+							/>
+						) : (
+							<LinkComponent
+								key={index}
+								label={button.title}
+								toPath={button?.href}
+								onPress={() => {
+									if (button.href == '/create') {
+										createGame();
+									}
+									setIsHost(button.isHost || false);
+								}}
+							/>
+						)
 					))}
 				</View>
+
 			</View>
 		</ImageBackground>
 	)
 }
-
-

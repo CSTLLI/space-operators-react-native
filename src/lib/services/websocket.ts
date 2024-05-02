@@ -38,6 +38,7 @@ export async function sendRequestSocket(
       type: type,
       data: data || {},
     };
+    console.log(JSON.stringify(message))
     ws.send(JSON.stringify(message));
   });
 }

@@ -7,11 +7,9 @@ import { styles } from './Session.style'
 import useUser from '@/stores/User.store'
 import useGame, { PlayerState } from '@/stores/Game.store'
 import { colors } from '@/lib/const'
-import { randomPlayers } from '@/lib/mock'
 import { useEffect } from 'react'
 import { fetchApi } from '@/lib/tools/api'
 import useServer from '@/stores/Server.store'
-import { getResponseSocket, requestSocket } from '@/lib/services/websocket'
 
 export const SessionScreen = () => {
 	const { uuid, isHost, isReady, setIsReady } = useUser();
@@ -62,9 +60,9 @@ export const SessionScreen = () => {
 					))}
 				</ScrollView>
 				<View style={styles.containerButtons}>
+					<Text style={styles.gameId}>Game ID : {gameId}</Text>
 					{isHost ? (
 						<View style={{ alignItems: "center" }}>
-							<Text style={styles.gameId}>Game ID: {gameId}</Text>
 							<ButtonComponent label="Démarrer la partie" onPress={() => ''} />
 						</View>
 					) : null}

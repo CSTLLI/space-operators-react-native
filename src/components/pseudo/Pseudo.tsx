@@ -6,7 +6,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import useUser from '@/stores/User.store';
 
-export const PseudoComponent = () => {
+export const PseudoComponent = ({
+    uuidVisible = true
+}) => {
     const { pseudo, setPseudo, uuid} = useUser();
 
     const onChangeText = (newPseudo: string) => {
@@ -21,7 +23,7 @@ export const PseudoComponent = () => {
 
     return (
         <View style={{ alignItems: "center" }}>
-            <Text style={styles.label}>{uuid}</Text>
+            {uuidVisible && <Text style={styles.label}>{uuid}</Text>}
             <View style={styles.inputGlobal}>
                 <TextInput
                     placeholder="Entrez un pseudo"
