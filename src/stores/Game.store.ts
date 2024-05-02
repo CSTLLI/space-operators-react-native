@@ -10,6 +10,8 @@ interface GameState {
 	gameId: string;
 	turns: number;
 	players: PlayerState[];
+	error: string;
+	setError: (error: string) => void;
 	setGameId: (gameId: string) => void;
 	updatePlayers: (players: PlayerState[]) => void;
 	nextTurn: () => void;
@@ -18,8 +20,10 @@ interface GameState {
 
 const useGame = create<GameState>((set) => ({
 	gameId: '00aa11bb',
-	turns: 0,
+	turns: 1,
 	players: [],
+	error: '',
+	setError: (error: string) => set({ error }),
 	setGameId: (newGameId: string) => set({ gameId: newGameId }),
 	updatePlayers: (newPlayers: PlayerState[]) => set({players: newPlayers}),
 	nextTurn: () => set(state => ({turns: state.turns + 1})),

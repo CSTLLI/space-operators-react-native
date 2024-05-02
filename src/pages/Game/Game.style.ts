@@ -1,4 +1,3 @@
-import { colors } from "@/lib/const";
 import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   containerImg: {
@@ -11,10 +10,13 @@ export const styles = StyleSheet.create({
     marginTop: 90,
     marginLeft: "auto",
     marginRight: "auto",
-    height: 800,
+    height: 790,
     width: 370,
     flexDirection: "column",
     justifyContent: "space-between",
+  },
+  containerItemsOperator: {
+
   },
   containerInfos: {
     // backgroundColor: "blue",
@@ -22,13 +24,16 @@ export const styles = StyleSheet.create({
   },
   infos: {
     // backgroundColor: 'red',
-    flexDirection: 'row',
+    flexDirection: "row",
     justifyContent: "space-between",
   },
   label: {
-    fontFamily: 'BowlbyOneSC_400Regular',
-    color: 'white',
+    fontFamily: "BowlbyOneSC_400Regular",
+    color: "white",
     marginBottom: 5,
-    fontSize: 18 
-}
+    fontSize: 18,
+  },
+  centered: {
+    alignItems: 'center'
+  }
 });

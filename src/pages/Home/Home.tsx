@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, ImageBackground, Image, Modal, TextInput } from 'react-native'
 
 import { ButtonComponent, LinkComponent } from '@/components/button/Button';
@@ -13,6 +13,7 @@ import { BackgroundHome, Title } from "@/lib/pictures"
 import { fetchApi } from '@/lib/tools/api';
 import { sendRequestSocket } from '@/lib/services/websocket';
 import { useNavigate } from 'react-router-native';
+import ErrorComponent from '@/components/error/Error';
 
 export const ButtonsList = [
 	{
@@ -38,9 +39,33 @@ export const HomeScreen = () => {
 	const [modalVisible, setModalVisible] = useState(false)
 
 	const { setIsHost, setIsReady, uuid, pseudo } = useUser()
-	const { setGameId, gameId } = useGame()
+	const { setGameId, gameId, setError, error } = useGame()
 	const ws = useServer(state => state.ws);
 	const navigate = useNavigate()
+
+	useEffect(() => {
+		if (ws && ws.readyState === WebSocket.OPEN) {
+			ws.onmessage = handleMessage;
+		}
+		return () => {
+			if (ws) {
+				ws.onmessage = null;
+			}
+		};
+	}, [ws]);
+
+	const handleMessage = (event: MessageEvent) => {
+		console.log(event)
+		if (event.data != "ping") {
+			const message = JSON.parse(event.data);
+			if (message.type === 'players' && message.data.players != '') {
+				navigate('/join')
+			} else {
+				console.log("not exist")
+				setError("Session invalide.")
+			}
+		}
+	};
 
 	const createGame = async () => {
 		try {
@@ -62,19 +87,15 @@ export const HomeScreen = () => {
 	const joinGame = async () => {
 		try {
 			setIsReady(false)
-			
-			const res = await sendRequestSocket(
-				ws, 
-				'connect', 
+
+			await sendRequestSocket(
+				ws,
+				'connect',
 				{
 					gameId,
 					playerId: uuid,
 					playerName: pseudo
 				})
-			console.log(res)
-			navigate('/join')
-
-
 		} catch (error) {
 			console.log(error)
 		}
@@ -96,9 +117,10 @@ export const HomeScreen = () => {
 								placeholder="Serveur ID"
 								placeholderTextColor="#808080"
 								value={gameId}
-								onChangeText={(event: any) => {setGameId(event.toLowerCase())}}
+								onChangeText={(event: any) => { setGameId(event.toLowerCase()) }}
 								style={styles.input}
 							/>
+							<ErrorComponent message={error} />
 						</View>
 						<View style={styles.containerButtons}>
 							<ButtonComponent label="Rejoindre" onPress={joinGame} />

@@ -50,6 +50,12 @@ export const SessionScreen = () => {
 		setIsReady(true)
 	}
 
+	const onPressStart = async () => {
+		// try {
+
+		// }
+	}
+
 	return (
 		<ImageBackground source={BackgroundSession} resizeMode="cover" style={styles.containerImg}>
 			<View style={styles.containerItems}>
@@ -65,7 +71,7 @@ export const SessionScreen = () => {
 					<Text style={styles.gameId}>Game ID : {gameId}</Text>
 					{isHost ? (
 						<View style={{ alignItems: "center" }}>
-							<ButtonComponent label="Démarrer la partie" onPress={() => ''} />
+							<ButtonComponent label="Démarrer la partie" onPress={onPressStart} />
 						</View>
 					) : null}
 					<ReadyButtonComponent

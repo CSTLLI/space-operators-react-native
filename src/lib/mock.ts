@@ -24,3 +24,12 @@ export const mockPlayersResponse = {
         players: randomPlayers
     },
 };
+
+export const mockOperationResponseInstructor = {
+    type: "operation",
+    data: {
+        turn: 1,
+        role: "instructor",
+             
+    }
+}

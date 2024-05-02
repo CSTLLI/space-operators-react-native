@@ -28,7 +28,6 @@ export const styles = StyleSheet.create({
     marginTop: 20,
   },
   modalView: {
-    margin: 20,
     display: "flex",
     justifyContent: "space-between",
     backgroundColor: "#221D1D",
@@ -40,9 +39,8 @@ export const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.55,
     shadowRadius: 4,
-    elevation: 5,
   },
   input: {
     marginTop: 4,
@@ -53,11 +51,11 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     fontFamily: "BowlbyOneSC_400Regular",
     color: "white",
-	borderWidth: 4,
-	borderColor: colors.primaryColor,
-	display: 'flex',
-	flexDirection: 'row',
-	alignItems: 'center',
-	alignContent: 'center'
+    borderWidth: 4,
+    borderColor: colors.primaryColor,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    alignContent: "center",
   },
 });
