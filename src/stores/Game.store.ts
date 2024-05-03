@@ -43,7 +43,7 @@ const useGame = create<GameState>((set) => ({
 	setTurn: (nextTurn: number) => set({turn: nextTurn}),
 	resetTurn: () => set({ turn: 0}),
 	setDurationTurn: (durationTurn: number) => set({durationTurn}),
-	initializeGame: () => set({turn: 1, integrity: 100, players: [], statusGame: 'pending', durationTurn: 0})
+	initializeGame: () => set({turn: 1, integrity: 100, players: [], statusGame: 'not started', durationTurn: 0, gameId: ''})
 }));
 
 export default useGame;

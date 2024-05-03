@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text } from "react-native";
 import { styles } from "@/pages/Game/Game.style";
+import useGame from "@/stores/Game.store";
 
 interface TimerProps {
   value?: number;
@@ -8,6 +9,7 @@ interface TimerProps {
 
 export const TimerComponent: React.FC<TimerProps> = ({ value }) => {
   const [timer, setTimer] = useState<number | undefined>(value);
+  const { setStatusGame } = useGame()
 
   useEffect(() => {
     if (value !== undefined) {
@@ -16,6 +18,7 @@ export const TimerComponent: React.FC<TimerProps> = ({ value }) => {
         setTimer((prevTimer) => {
           if (prevTimer === undefined || prevTimer <= 0) {
             clearInterval(interval);
+            setStatusGame('pending')
             return 0;
           }
           return parseFloat((prevTimer - 0.1).toFixed(1));

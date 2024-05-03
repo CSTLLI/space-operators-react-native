@@ -125,7 +125,7 @@ export const GameScreen = () => {
 					case "pending":
 						return (
 							<View style={styles.pending}>
-								<Text style={styles.label}>La partie va bientôt commencer...</Text>
+								<Text style={styles.label}>En attente de la prochaine opération...</Text>
 							</View>
 						)
 					case "active":
