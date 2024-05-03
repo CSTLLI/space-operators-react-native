@@ -1,7 +1,7 @@
 import { PlayerState } from "@/stores/Game.store";
 import { RoleState } from "@/stores/User.store";
 
-export const pseudoRandoms = ["Mazaki", "RED", "Pierro", "MB", "CSTLLI"];
+export const pseudoRandoms = ["Mazaki", "RED", "Pierro", "MB", "CSTLLI", "Melgirl3"];
 
 export const getRandomStatus = () => Math.random() < 0.5;
 
@@ -11,6 +11,7 @@ export const randomPlayers: PlayerState[] = [
   { name: "Pierro", status: getRandomStatus() },
   { name: "MB", status: getRandomStatus() },
   { name: "CSTLLI", status: getRandomStatus() },
+  { name: "Melgirl3", status: getRandomStatus() }
 ];
 
 export const mockPlayersResponse = {

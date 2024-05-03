@@ -1,8 +1,10 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import { Link, To } from 'react-router-native';
+import { Link, To, useNavigate } from 'react-router-native';
 import { stylesButton } from './Button.style';
 import { colors } from '@/lib/const';
+import useGame from '@/stores/Game.store';
+import useUser from '@/stores/User.store';
 
 interface LinkProps {
 	label: string;
@@ -12,9 +14,9 @@ interface LinkProps {
 }
 
 interface ButtonProps {
-	label: string;
+	label?: string;
 	color?: string;
-	onPress: () => void;
+	onPress?: () => void;
 }
 
 export const LinkComponent: React.FC<LinkProps> = ({ label, toPath, onPress }) => {
@@ -44,3 +46,20 @@ export const ReadyButtonComponent: React.FC<ButtonProps> = ({ label, onPress, co
 		</TouchableOpacity>
 	);
 };
+
+export const InitializeButtonComponent: React.FC<ButtonProps> = ({ label = "Retour" }) => {
+	const navigate = useNavigate()
+	const { initializeGame } = useGame()
+	const { initializeUser } = useUser()
+
+	return (
+		<ButtonComponent
+			label={label}
+			onPress={() => {
+				initializeGame()
+				initializeUser()
+				navigate('/')
+			}}
+		/>
+	)
+}

@@ -16,12 +16,13 @@ export interface UserState {
     setPseudoOperator: (newPseudoOperator: string) => void;
     setIsHost: (isHost: boolean) => void;
     setRole: (role: RoleState) => void;
+    initializeUser: () => void;
 }
 
 const useUser = create<UserState>((set) => ({
     pseudo: 'CSTLLI',
     pseudoOperator: '',
-    role: 'instructor',
+    role: '',
     isReady: false,
     isHost: false,
     setPseudo: (newPseudo: string) => set({ pseudo: newPseudo}),
@@ -29,7 +30,8 @@ const useUser = create<UserState>((set) => ({
     setIsReady: (newIsReady: boolean) => set({isReady: newIsReady}),
     setIsHost: (newIsHost: boolean) => set({isHost: newIsHost}),
     setRole: (newRole: RoleState) => set({role: newRole}),
-    uuid: uuidv4()
+    initializeUser: () => set({role: '', pseudoOperator: '', isReady: false, isHost: false}),
+    uuid: uuidv4(),
 }))
 
 export default useUser;

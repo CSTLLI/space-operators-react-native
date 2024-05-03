@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { View, ImageBackground, Text, ScrollView, Modal } from 'react-native'
-import { useNavigate } from 'react-router-native';
 
 import { BackgroundGameOperator, BackgroundGameInstructor } from "@/lib/pictures"
 
-import { ButtonComponent, LinkComponent } from '@/components/button/Button';
+import { InitializeButtonComponent, LinkComponent } from '@/components/button/Button';
 import { ProgressBarComponent } from '@/components/progressbar/ProgressBar';
 import { styles } from "./Game.style";
 
@@ -12,16 +11,16 @@ import useUser from '@/stores/User.store';
 import useGame from '@/stores/Game.store';
 import useServer from '@/stores/Server.store';
 
-import { OperationResponseState, mockOperationResponseInstructor } from '@/lib/mock';
+import { OperationResponseState } from '@/lib/mock';
+import { TimerComponent } from '@/components/timer/Timer';
 
 export const GameScreen = () => {
-	const [modalVisible, setModalVisible] = useState(true)
+	const [modalVisible, setModalVisible] = useState(false)
 	const [operation, setOperation] = useState<OperationResponseState>()
 
 	const { role, pseudo, setRole, pseudoOperator, setPseudoOperator } = useUser();
-	const { turns, setTurns, integrity, setIntegrity, statusGame, setStatusGame } = useGame()
+	const { turn, setTurn, integrity, setIntegrity, statusGame, setStatusGame } = useGame()
 	const { ws } = useServer()
-	const navigate = useNavigate();
 
 	const endGame = ({ type }) => {
 		setModalVisible(true)
@@ -31,9 +30,7 @@ export const GameScreen = () => {
 	useEffect(() => {
 		if (operation) {
 			setRole(operation.role)
-			setTurns(operation.turn)
-
-			if (turns == 3) endGame({ type: "victory"});
+			setTurn(operation.turn)
 
 			if (operation.role == "operator") {
 				setPseudoOperator(operation.id)
@@ -62,7 +59,6 @@ export const GameScreen = () => {
 			}
 
 			if (message.type == "integrity") {
-				console.log("integrity", message.data)
 				setIntegrity(message.data.integrity)
 			};
 
@@ -103,14 +99,14 @@ export const GameScreen = () => {
 										return (
 											<View style={styles.centeredView}>
 												<Text style={styles.label}>Vaisseau détruit...</Text>
-												<Text style={styles.label}>Phase {turns} atteinte</Text>
+												<Text style={styles.label}>Phase {turn} atteinte</Text>
 											</View>
 										);
 									default:
 										return null;
 								}
 							})()}
-							<ButtonComponent label="Retour" onPress={() => navigate('/')} />
+							<InitializeButtonComponent />
 						</View>
 					</View>
 				</View>
@@ -119,8 +115,8 @@ export const GameScreen = () => {
 				{/* Infos for the 2 roles */}
 				<View style={styles.containerInfos}>
 					<View style={styles.infos}>
-						<Text style={styles.label}>Phase {turns}</Text>
-						<Text style={styles.label}>00:30</Text>
+						<Text style={styles.label}>Phase {turn}</Text>
+						<TimerComponent value={15} />
 					</View>
 					<ProgressBarComponent value={integrity} />
 					<Text
