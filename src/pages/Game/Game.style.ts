@@ -79,7 +79,7 @@ export const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   pending: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
