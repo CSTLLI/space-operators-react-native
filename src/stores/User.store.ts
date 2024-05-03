@@ -2,7 +2,7 @@ import { create } from "zustand";
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 
-type RoleState = 'operator' | 'instructor' | '' 
+export type RoleState = 'operator' | 'instructor' | '' 
 
 export interface UserState {
     pseudo: string;
@@ -21,7 +21,7 @@ export interface UserState {
 const useUser = create<UserState>((set) => ({
     pseudo: 'CSTLLI',
     pseudoOperator: '',
-    role: 'operator',
+    role: 'instructor',
     isReady: false,
     isHost: false,
     setPseudo: (newPseudo: string) => set({ pseudo: newPseudo}),

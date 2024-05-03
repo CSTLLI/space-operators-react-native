@@ -5,6 +5,7 @@ import { pseudoRandoms } from '@/lib/mock';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import useUser from '@/stores/User.store';
+import { colors } from '@/lib/const';
 
 export const PseudoComponent = ({
     uuidVisible = true
@@ -26,6 +27,7 @@ export const PseudoComponent = ({
             {uuidVisible && <Text style={styles.label}>{uuid}</Text>}
             <View style={styles.inputGlobal}>
                 <TextInput
+                    placeholderTextColor={colors.grayColor}
                     placeholder="Entrez un pseudo"
                     value={pseudo}
                     onChangeText={onChangeText}

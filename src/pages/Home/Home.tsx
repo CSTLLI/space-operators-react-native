@@ -14,6 +14,7 @@ import { fetchApi } from '@/lib/tools/api';
 import { sendRequestSocket } from '@/lib/services/websocket';
 import { useNavigate } from 'react-router-native';
 import ErrorComponent from '@/components/error/Error';
+import { colors } from '@/lib/const';
 
 export const ButtonsList = [
 	{
@@ -39,7 +40,7 @@ export const HomeScreen = () => {
 	const [modalVisible, setModalVisible] = useState(false)
 
 	const { setIsHost, setIsReady, uuid, pseudo } = useUser()
-	const { setGameId, gameId, setError, error } = useGame()
+	const { setGameId, gameId, setError, error, updatePlayers } = useGame()
 	const ws = useServer(state => state.ws);
 	const navigate = useNavigate()
 
@@ -55,13 +56,12 @@ export const HomeScreen = () => {
 	}, [ws]);
 
 	const handleMessage = (event: MessageEvent) => {
-		console.log(event)
 		if (event.data != "ping") {
 			const message = JSON.parse(event.data);
 			if (message.type === 'players' && message.data.players != '') {
+				updatePlayers(message.data.players)
 				navigate('/join')
 			} else {
-				console.log("not exist")
 				setError("Session invalide.")
 			}
 		}
@@ -115,7 +115,7 @@ export const HomeScreen = () => {
 							<PseudoComponent uuidVisible={false} />
 							<TextInput
 								placeholder="Serveur ID"
-								placeholderTextColor="#808080"
+								placeholderTextColor={colors.grayColor}
 								value={gameId}
 								onChangeText={(event: any) => { setGameId(event.toLowerCase()) }}
 								style={styles.input}

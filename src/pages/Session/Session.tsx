@@ -1,5 +1,6 @@
 import { ReadyButtonComponent, ButtonComponent, LinkComponent } from '@/components/button/Button'
 import { View, ImageBackground, Text, ScrollView } from 'react-native'
+import { useNavigate } from 'react-router-native'
 
 import { BackgroundSession } from '@/lib/pictures'
 import { styles } from './Session.style'
@@ -10,11 +11,14 @@ import { colors } from '@/lib/const'
 import { useEffect } from 'react'
 import { fetchApi } from '@/lib/tools/api'
 import useServer from '@/stores/Server.store'
+import { sendRequestSocket } from '@/lib/services/websocket'
+import ErrorComponent from '@/components/error/Error'
 
 export const SessionScreen = () => {
 	const { uuid, isHost, isReady, setIsReady } = useUser();
-	const { gameId, players, updatePlayers } = useGame();
+	const { gameId, players, updatePlayers, error, setError } = useGame();
 	const { ws } = useServer()
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		if (ws && ws.readyState === WebSocket.OPEN) {
@@ -27,12 +31,14 @@ export const SessionScreen = () => {
 		};
 	}, [ws, updatePlayers]);
 
-    const handleMessage = (event: MessageEvent) => {
-		console.log(event)
+	const handleMessage = (event: MessageEvent) => {
 		if (event.data != "ping") {
 			const message = JSON.parse(event.data);
 			if (message.type === 'players') {
 				updatePlayers(message.data.players);
+			}
+			if (message.type == "start") {
+				navigate('/game')
 			}
 		}
 	};
@@ -51,9 +57,19 @@ export const SessionScreen = () => {
 	}
 
 	const onPressStart = async () => {
-		// try {
-
-		// }
+		try {
+			if (players.length > 1) {
+				if (players.every(player => player.status === true)) {
+					await sendRequestSocket(ws, 'start', {
+						gameId,
+					})
+				} else {
+					setError("Joueurs pas prêts.")
+				}
+			} else setError("Minimum 2 joueurs")
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	return (
@@ -80,6 +96,7 @@ export const SessionScreen = () => {
 						color={isReady ? colors.greenColor : colors.primaryColor}
 					/>
 					<LinkComponent label="Retour" toPath="/" />
+					<ErrorComponent message={error} />
 				</View>
 			</View>
 		</ImageBackground>
