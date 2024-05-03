@@ -51,6 +51,6 @@ export const styles = StyleSheet.create({
 		fontFamily: 'BowlbyOneSC_400Regular',
         color: 'white',
         marginBottom: 5,
-        fontSize: 11
+        fontSize: 18
 	}
 });
