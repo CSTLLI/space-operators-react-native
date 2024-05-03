@@ -78,4 +78,11 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.55,
     shadowRadius: 4,
   },
+  pending: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'black',
+    opacity: 0.8,
+    flex: 1,
+  }
 });

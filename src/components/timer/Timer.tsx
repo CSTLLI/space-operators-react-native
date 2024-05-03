@@ -11,15 +11,16 @@ export const TimerComponent: React.FC<TimerProps> = ({ value }) => {
 
   useEffect(() => {
     if (value !== undefined) {
+      setTimer(value)
       const interval = setInterval(() => {
         setTimer((prevTimer) => {
           if (prevTimer === undefined || prevTimer <= 0) {
             clearInterval(interval);
             return 0;
           }
-          return prevTimer - 1;
+          return parseFloat((prevTimer - 0.1).toFixed(1));
         });
-      }, 1000);
+      }, 100);
 
       return () => clearInterval(interval);
     }

@@ -6,7 +6,7 @@ export interface PlayerState {
 	status: boolean;
 }
 
-export type StatusGameState = 'active' | 'pending' | 'destroyed' | 'victory'
+export type StatusGameState = 'not started' | 'active' | 'pending' | 'destroyed' | 'victory'
 
 interface GameState {
 	gameId: string;
@@ -33,7 +33,7 @@ const useGame = create<GameState>((set) => ({
 	integrity: 100,
 	players: [],
 	error: '',
-	statusGame: 'pending',
+	statusGame: 'not started',
 	durationTurn: 0,
 	setIntegrity: (newIntegrity: number) => set({integrity: newIntegrity}),
 	setStatusGame: (newStatusGame: StatusGameState) => set({statusGame: newStatusGame}),

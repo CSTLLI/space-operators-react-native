@@ -19,7 +19,7 @@ export const GameScreen = () => {
 	const [operation, setOperation] = useState<OperationResponseState>()
 
 	const { role, pseudo, setRole, pseudoOperator, setPseudoOperator } = useUser();
-	const { turn, setTurn, integrity, setIntegrity, statusGame, setStatusGame } = useGame()
+	const { turn, durationTurn, setTurn, integrity, setIntegrity, statusGame, setStatusGame, setDurationTurn } = useGame()
 	const { ws } = useServer()
 
 	const endGame = ({ type }) => {
@@ -29,8 +29,10 @@ export const GameScreen = () => {
 
 	useEffect(() => {
 		if (operation) {
+			console.log(pseudo, operation)
 			setRole(operation.role)
 			setTurn(operation.turn)
+			setDurationTurn(operation.duration)
 
 			if (operation.role == "operator") {
 				setPseudoOperator(operation.id)
@@ -54,7 +56,8 @@ export const GameScreen = () => {
 			const message = JSON.parse(event.data);
 
 			if (message.type === 'operation') {
-				console.log(pseudo, event)
+				// console.log(pseudo, event)
+				setStatusGame('active')
 				setOperation(message.data)
 			}
 
@@ -63,11 +66,11 @@ export const GameScreen = () => {
 			};
 
 			if (message.type == "destroyed") {
-				endGame({ type: "destroyed"});
+				endGame({ type: "destroyed" });
 			};
 
 			if (message.type == "victory") {
-				endGame({ type: "victory"});
+				endGame({ type: "victory" });
 			};
 		}
 	};
@@ -111,44 +114,64 @@ export const GameScreen = () => {
 					</View>
 				</View>
 			</Modal>
-			<View style={styles.containerItems}>
-				{/* Infos for the 2 roles */}
-				<View style={styles.containerInfos}>
-					<View style={styles.infos}>
-						<Text style={styles.label}>Phase {turn}</Text>
-						<TimerComponent value={15} />
-					</View>
-					<ProgressBarComponent value={integrity} />
-					<Text
-						style={[styles.label, { marginLeft: 'auto', marginRight: 'auto' }]}
-					>
-						{role == "operator" ? "Operateur: " + pseudoOperator : "Instructeur"}
-					</Text>
-				</View>
-				{
-					role === "operator" ?
-						(
-							<View style={styles.containerItemsOperator}>
-
+			{(() => {
+				switch (statusGame) {
+					case "not started":
+						return (
+							<View style={styles.pending}>
+								<Text style={styles.label}>La partie va bientôt commencer...</Text>
 							</View>
 						)
-						:
-						role === "instructor" ?
-							(
-								<View style={styles.containerItemsOperator}>
-									<ScrollView style={styles.containerList}>
-										<View style={styles.operationElement}>
-											<Text style={styles.operationID}>{operation?.id}</Text>
-											<Text style={styles.operationDescription}>{operation?.description}</Text>
-										</View>
-									</ScrollView>
+					case "pending":
+						return (
+							<View style={styles.pending}>
+								<Text style={styles.label}>La partie va bientôt commencer...</Text>
+							</View>
+						)
+					case "active":
+						return (
+							<View style={styles.containerItems}>
+								{/* Infos for the 2 roles */}
+								<View style={styles.containerInfos}>
+									<View style={styles.infos}>
+										<Text style={styles.label}>Phase {turn}</Text>
+										<TimerComponent value={durationTurn} />
+									</View>
+									<ProgressBarComponent value={integrity} />
+									<Text
+										style={[styles.label, { marginLeft: 'auto', marginRight: 'auto' }]}
+									>
+										{role == "operator" ? "Operateur: " + pseudoOperator : "Instructeur"}
+									</Text>
 								</View>
-							) : null
+								{(() => {
+									switch (role) {
+										case "operator":
+											return (
+												<View style={styles.containerItemsOperator}>
+
+												</View>
+											)
+										case "instructor":
+											return (
+												<View style={styles.containerItemsOperator}>
+													<ScrollView style={styles.containerList}>
+														<View style={styles.operationElement}>
+															<Text style={styles.operationID}>{operation?.id}</Text>
+															<Text style={styles.operationDescription}>{operation?.description}</Text>
+														</View>
+													</ScrollView>
+												</View>
+											)
+									}
+								})()}
+								<View style={styles.centered}>
+									<LinkComponent label='Quitter' toPath='/' />
+								</View>
+							</View>
+						)
 				}
-				<View style={styles.centered}>
-					<LinkComponent label='Quitter' toPath='/' />
-				</View>
-			</View>
+			})()}
 		</ImageBackground>
 	);
 }

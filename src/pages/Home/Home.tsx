@@ -56,6 +56,7 @@ export const HomeScreen = () => {
 	}, [ws]);
 
 	const handleMessage = (event: MessageEvent) => {
+		// console.log(event)
 		if (event.data != "ping") {
 			const message = JSON.parse(event.data);
 			if (message.type === 'players' && message.data.players != '') {
