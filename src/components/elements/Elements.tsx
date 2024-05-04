@@ -52,25 +52,27 @@ export const ElementsComponent: React.FC<ElementsComponentProps> = ({ elements, 
         return true;
     };
 
-    const handleElementPress = (id: number) => {
-        const updatedResults = [...results];
+    const handleElementPress = (id: number, value?: boolean) => {
+        let updatedResults = [...results];
         const expectedResults: number[] = expected.switchs || (expected.buttons?.ids) || [];
 
-        updatedResults.push(id);
+        if (value) {
+            updatedResults.push(id);
+        } else {
+            updatedResults = updatedResults.filter((resultId) => resultId !== id);
+        }
         updatedResults.sort((a, b) => a - b);
-
         setResults(updatedResults);
+
         // console.log("Results:", updatedResults);
         // console.log("Expected:", expectedResults);      
         // console.log("Are equal:", arraysAreEqual(updatedResults, expectedResults));
-
         if (arraysAreEqual(updatedResults, expectedResults)) {
             handleSubmitResponse();
         }
     };
 
     const handleSubmitResponse = async () => {
-        console.log("submit")
         await sendRequestSocket(ws, "finish", {
             operator: pseudoOperator,
             success: true
@@ -86,7 +88,8 @@ export const ElementsComponent: React.FC<ElementsComponentProps> = ({ elements, 
                         return (
                             <Switch
                                 ios_backgroundColor={element.value}
-                                onValueChange={() => handleElementPress(element.id)}
+                                onValueChange={(value) => handleElementPress(element.id, value)}
+                                value={results.includes(element.id)}
                             />
                         );
                     case 'number':
@@ -95,7 +98,8 @@ export const ElementsComponent: React.FC<ElementsComponentProps> = ({ elements, 
                             <View style={{ display: 'flex', flexDirection: 'row', gap: 20 }}>
                                 <Switch
                                     ios_backgroundColor={colors.grayColor}
-                                    onValueChange={() => handleElementPress(element.id)}
+                                    onValueChange={(value) => handleElementPress(element.id, value)}
+                                    value={results.includes(element.id)}
                                 />
                                 <Text style={styles.label}>{element.value}</Text>
                             </View>
@@ -107,7 +111,7 @@ export const ElementsComponent: React.FC<ElementsComponentProps> = ({ elements, 
                         return (
                             <ButtonComponent
                                 color={element.value}
-                                onPress={() => handleElementPress(element.id)}
+                                onPress={() => handleElementPress(element.id, true)}
                             />
                         );
                     case 'number':
@@ -116,7 +120,7 @@ export const ElementsComponent: React.FC<ElementsComponentProps> = ({ elements, 
                             <ButtonComponent
                                 color={colors.orangeColor}
                                 label={element.value}
-                                onPress={() => handleElementPress(element.id)}
+                                onPress={() => handleElementPress(element.id, true)}
                             />
                         )
                 }
