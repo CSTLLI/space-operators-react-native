@@ -24,7 +24,7 @@ export const mockPlayersResponse = {
 
 export const mockOperationResponseInstructor: OperationResponseState = {
   type: "operation",
-  description: "Activez les nombres pairs",
+  description: "Activez les nombres pairs en commençant par 2",
   elements: [
     { valueType: "number", value: "7", type: "switch", id: 4 },
     { valueType: "number", value: "2", type: "switch", id: 0 },
