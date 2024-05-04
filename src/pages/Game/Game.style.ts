@@ -51,8 +51,8 @@ export const styles = StyleSheet.create({
   operationElement: {
     display: 'flex',
     flexDirection: 'row',
-    gap: 10,
-    alignItems: 'center'
+    gap: 0,
+    alignItems: 'center',
   },
   operationID: {
     fontFamily: "BowlbyOneSC_400Regular",
@@ -61,7 +61,8 @@ export const styles = StyleSheet.create({
   },
   operationDescription: {
     fontSize: 14,
-    color: 'white' 
+    color: 'white',
+    paddingHorizontal: 20
   },
   modalView: {
     display: "flex",
