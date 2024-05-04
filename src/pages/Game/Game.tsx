@@ -13,6 +13,7 @@ import useServer from '@/stores/Server.store';
 
 import { OperationResponseState } from '@/lib/mock';
 import { TimerComponent } from '@/components/timer/Timer';
+import { ElementsComponent } from '@/components/elements/Elements';
 
 export const GameScreen = () => {
 	const [modalVisible, setModalVisible] = useState(false)
@@ -149,7 +150,7 @@ export const GameScreen = () => {
 										case "operator":
 											return (
 												<View style={styles.containerItemsOperator}>
-
+													{ operation && <ElementsComponent elements={operation.elements} results={operation.result}/> }
 												</View>
 											)
 										case "instructor":

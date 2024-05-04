@@ -31,9 +31,9 @@ export const LinkComponent: React.FC<LinkProps> = ({ label, toPath, onPress }) =
 	);
 };
 
-export const ButtonComponent: React.FC<ButtonProps> = ({ label, onPress }) => {
+export const ButtonComponent: React.FC<ButtonProps> = ({ label, onPress, color }) => {
 	return (
-		<TouchableOpacity style={[stylesButton.default, { backgroundColor: colors.primaryColor }]} onPress={onPress}>
+		<TouchableOpacity style={[stylesButton.default, { backgroundColor: color ? color : colors.primaryColor }]} onPress={onPress}>
 			<Text style={stylesButton.text}>{label}</Text>
 		</TouchableOpacity>
 	);

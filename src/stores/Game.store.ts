@@ -33,7 +33,7 @@ const useGame = create<GameState>((set) => ({
 	integrity: 100,
 	players: [],
 	error: '',
-	statusGame: 'pending',
+	statusGame: 'not started',
 	durationTurn: 0,
 	setIntegrity: (newIntegrity: number) => set({integrity: newIntegrity}),
 	setStatusGame: (newStatusGame: StatusGameState) => set({statusGame: newStatusGame}),

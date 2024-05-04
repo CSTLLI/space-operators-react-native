@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import {colors} from "@/lib/const";
 
 export const styles = StyleSheet.create({
     container: {
@@ -7,7 +6,6 @@ export const styles = StyleSheet.create({
     },
     bar: {
         height: 15,
-        // width: 162.5,
         borderRadius: 50,
         position: 'absolute',
         zIndex: 10
@@ -21,6 +19,5 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 15,
         top: -7,
-        // left: 97.5
     }
 });
