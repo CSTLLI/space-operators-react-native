@@ -19,7 +19,7 @@ export const GameScreen = () => {
 	const [modalVisible, setModalVisible] = useState(false)
 	const [operation, setOperation] = useState<OperationResponseState>()
 
-	const { role, pseudo, setRole, pseudoOperator, setPseudoOperator } = useUser();
+	const { role, setRole, pseudoOperator, setPseudoOperator } = useUser();
 	const { turn, durationTurn, setTurn, integrity, setIntegrity, statusGame, setStatusGame, setDurationTurn } = useGame()
 	const { ws } = useServer()
 
@@ -30,8 +30,7 @@ export const GameScreen = () => {
 
 	useEffect(() => {
 		if (operation) {
-			console.log(pseudo, operation)
-			
+			// console.log(pseudo, operation)
 			setRole(operation.role)
 			setTurn(operation.turn)
 			setDurationTurn(operation.duration)
@@ -58,7 +57,6 @@ export const GameScreen = () => {
 			const message = JSON.parse(event.data);
 
 			if (message.type === 'operation') {
-				// console.log(pseudo, event)
 				setStatusGame('active')
 				setOperation(message.data)
 			}
@@ -97,7 +95,7 @@ export const GameScreen = () => {
 									case "victory":
 										return (
 											<View style={styles.centeredView}>
-												<Text style={styles.label}>Victoire ! Phase 20 atteinte</Text>
+												<Text style={styles.label}>Victoire ! Phase {turn} atteinte</Text>
 											</View>
 										);
 									case "destroyed":
