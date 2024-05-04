@@ -47,19 +47,25 @@ export const ReadyButtonComponent: React.FC<ButtonProps> = ({ label, onPress, co
 	);
 };
 
-export const InitializeButtonComponent: React.FC<ButtonProps> = ({ label = "Retour" }) => {
+export const InitializeButtonComponent: React.FC<ButtonProps> = ({ label = "Retour", onPress}) => {
 	const navigate = useNavigate()
 	const { initializeGame } = useGame()
 	const { initializeUser } = useUser()
 
+	const handlePress = () => {
+		initializeGame()
+		initializeUser()
+		if (onPress) {
+			onPress()
+		}else {
+			navigate('/')
+		}
+	}
+
 	return (
 		<ButtonComponent
 			label={label}
-			onPress={() => {
-				initializeGame()
-				initializeUser()
-				navigate('/')
-			}}
+			onPress={handlePress}
 		/>
 	)
 }

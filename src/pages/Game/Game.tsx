@@ -31,6 +31,7 @@ export const GameScreen = () => {
 	useEffect(() => {
 		if (operation) {
 			console.log(pseudo, operation)
+			
 			setRole(operation.role)
 			setTurn(operation.turn)
 			setDurationTurn(operation.duration)
@@ -150,7 +151,7 @@ export const GameScreen = () => {
 										case "operator":
 											return (
 												<View style={styles.containerItemsOperator}>
-													{ operation && <ElementsComponent elements={operation.elements} results={operation.result}/> }
+													{operation && <ElementsComponent elements={operation.elements} expected={operation.result} />}
 												</View>
 											)
 										case "instructor":

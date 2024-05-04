@@ -1,4 +1,4 @@
-import { ReadyButtonComponent, ButtonComponent, LinkComponent } from '@/components/button/Button'
+import { ReadyButtonComponent, ButtonComponent, LinkComponent, InitializeButtonComponent } from '@/components/button/Button'
 import { View, ImageBackground, Text, ScrollView } from 'react-native'
 import { useNavigate } from 'react-router-native'
 
@@ -34,6 +34,7 @@ export const SessionScreen = () => {
 	const handleMessage = (event: MessageEvent) => {
 		if (event.data != "ping") {
 			const message = JSON.parse(event.data);
+
 			if (message.type === 'players') {
 				updatePlayers(message.data.players);
 			}
@@ -51,7 +52,7 @@ export const SessionScreen = () => {
 		try {
 			await fetchApi(`/ready/${uuid}`)
 		} catch (error) {
-			console.log(error)
+			// console.log(error)
 		}
 		setIsReady(true)
 	}
@@ -95,7 +96,7 @@ export const SessionScreen = () => {
 						label={isReady ? "Prêt" : "Pas prêt"}
 						color={isReady ? colors.greenColor : colors.primaryColor}
 					/>
-					<LinkComponent label="Retour" toPath="/" />
+					<InitializeButtonComponent />
 					<ErrorComponent message={error} />
 				</View>
 			</View>

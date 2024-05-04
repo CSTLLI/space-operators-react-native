@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, ImageBackground, Image, Modal, TextInput } from 'react-native'
 
-import { ButtonComponent, LinkComponent } from '@/components/button/Button';
+import { ButtonComponent, InitializeButtonComponent, LinkComponent } from '@/components/button/Button';
 import { PseudoComponent } from '@/components/pseudo/Pseudo';
 import { styles } from "./Home.style";
 
@@ -125,7 +125,7 @@ export const HomeScreen = () => {
 						</View>
 						<View style={styles.containerButtons}>
 							<ButtonComponent label="Rejoindre" onPress={joinGame} />
-							<ButtonComponent label="Retour" onPress={() => setModalVisible(false)} />
+							<InitializeButtonComponent onPress={() => setModalVisible(false)}/>
 						</View>
 					</View>
 				</View>
