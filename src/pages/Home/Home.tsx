@@ -28,7 +28,7 @@ export const ButtonsList = [
 	},
 	{
 		"title": "Historique",
-		"href": "/game"
+		"href": "/history"
 	},
 	{
 		"title": "Quitter",

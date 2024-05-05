@@ -6,6 +6,7 @@ import BackgroundGameInstructor from "@assets/game/bg_game_instructor_default.pn
 import Title from "@assets/game/title.png"
 import PanelKit from "@assets/game/panel_kit.png"
 import Rocket from "@assets/game/rocket.png"
+import Explosion from "@assets/game/explosion.gif"
 
 export {
 	BackgroundHome,
@@ -14,5 +15,6 @@ export {
 	BackgroundGameOperator,
 	Title,
 	PanelKit,
-	Rocket
+	Rocket, 
+	Explosion
 }

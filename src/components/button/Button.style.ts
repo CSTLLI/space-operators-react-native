@@ -6,6 +6,7 @@ export const stylesButton = StyleSheet.create({
         paddingVertical: 12,
         width: 250,
         borderRadius: 5,
+        zIndex: -5
     },
     redBtn: {
         backgroundColor: colors.primaryColor,

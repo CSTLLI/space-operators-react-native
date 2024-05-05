@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { View, ImageBackground, Text, ScrollView, Modal } from 'react-native'
+import { View, ImageBackground, Text, ScrollView, Modal, Image } from 'react-native'
 
-import { BackgroundGameOperator, BackgroundGameInstructor } from "@/lib/pictures"
+import { BackgroundGameOperator, BackgroundGameInstructor, Explosion, Rocket } from "@/lib/pictures"
 
 import { InitializeButtonComponent, LinkComponent } from '@/components/button/Button';
 import { ProgressBarComponent } from '@/components/progressbar/ProgressBar';
@@ -17,15 +17,21 @@ import { ElementsComponent } from '@/components/elements/Elements';
 
 export const GameScreen = () => {
 	const [modalVisible, setModalVisible] = useState(false)
+	const [showDestroyedGif, setShowDestroyedGif] = useState(true)
 	const [operation, setOperation] = useState<OperationResponseState>()
 
 	const { role, setRole, pseudoOperator, setPseudoOperator } = useUser();
-	const { turn, durationTurn, setTurn, integrity, setIntegrity, statusGame, setStatusGame, setDurationTurn } = useGame()
-	const { ws } = useServer()
+	const { turn, players, durationTurn, setTurn, integrity, setIntegrity, statusGame, setStatusGame, setDurationTurn } = useGame()
+	const { ws, addGameHistory } = useServer()
 
 	const endGame = ({ type }) => {
 		setModalVisible(true)
 		setStatusGame(type)
+		if (type == "destroyed") {
+			setTimeout(() => {
+				setShowDestroyedGif(false)
+			}, 1000)
+		}
 	}
 
 	useEffect(() => {
@@ -65,13 +71,14 @@ export const GameScreen = () => {
 				setIntegrity(message.data.integrity)
 			};
 
-			if (message.type == "destroyed") {
-				endGame({ type: "destroyed" });
-			};
-
-			if (message.type == "victory") {
-				endGame({ type: "victory" });
-			};
+			if (message.type == "destroyed" || message.type == "victory") {
+				addGameHistory({
+					gameStatus: message.type == "destroyed" ? "defeat" : "victory",
+					players: players,
+					turns: turn
+				})
+				endGame({ type: message.type });
+			}
 		}
 	};
 
@@ -103,6 +110,13 @@ export const GameScreen = () => {
 											<View style={styles.centeredView}>
 												<Text style={styles.label}>Vaisseau détruit...</Text>
 												<Text style={styles.label}>Phase {turn} atteinte</Text>
+												{showDestroyedGif &&
+													<Image
+														source={Explosion}
+														alt="Explosion"
+														style={{ position: 'absolute', width: 400, height: 400, zIndex: 100 }}
+													/>
+												}
 											</View>
 										);
 									default:
@@ -174,4 +188,8 @@ export const GameScreen = () => {
 			})()}
 		</ImageBackground>
 	);
+}
+
+function addGameHistory(arg0: {}) {
+	throw new Error('Function not implemented.');
 }
