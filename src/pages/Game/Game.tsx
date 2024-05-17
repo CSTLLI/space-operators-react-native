@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { View, ImageBackground, Text, ScrollView, Modal, Image } from 'react-native'
 
-import { BackgroundGameOperator, BackgroundGameInstructor, Explosion, Rocket } from "@/lib/pictures"
+import { BackgroundGameOperator, BackgroundGameInstructor, Explosion } from "@/lib/pictures"
 
 import { InitializeButtonComponent, LinkComponent } from '@/components/button/Button';
 import { ProgressBarComponent } from '@/components/progressbar/ProgressBar';
 import { styles } from "./Game.style";
 
 import useUser from '@/stores/User.store';
-import useGame from '@/stores/Game.store';
+import useGame, { StatusGameState } from '@/stores/Game.store';
 import useServer from '@/stores/Server.store';
 
 import { OperationResponseState } from '@/lib/mock';
@@ -20,11 +20,11 @@ export const GameScreen = () => {
 	const [showDestroyedGif, setShowDestroyedGif] = useState(true)
 	const [operation, setOperation] = useState<OperationResponseState>()
 
-	const { role, setRole, pseudoOperator, setPseudoOperator } = useUser();
+	const { role, setRole, pseudoOperator, setPseudoOperator, pseudo} = useUser();
 	const { turn, players, durationTurn, setTurn, integrity, setIntegrity, statusGame, setStatusGame, setDurationTurn } = useGame()
 	const { ws, addGameHistory } = useServer()
 
-	const endGame = ({ type }) => {
+	const endGame = ({ type }: StatusGameState) => {
 		setModalVisible(true)
 		setStatusGame(type)
 		if (type == "destroyed") {
@@ -32,6 +32,7 @@ export const GameScreen = () => {
 				setShowDestroyedGif(false)
 			}, 1000)
 		}
+	
 	}
 
 	useEffect(() => {
@@ -46,7 +47,7 @@ export const GameScreen = () => {
 			}
 		}
 	}, [operation])
-
+	
 	useEffect(() => {
 		if (ws && ws.readyState === WebSocket.OPEN) {
 			ws.onmessage = handleMessage;
@@ -63,6 +64,7 @@ export const GameScreen = () => {
 			const message = JSON.parse(event.data);
 
 			if (message.type === 'operation') {
+				console.log(pseudo, role, message.data)
 				setStatusGame('active')
 				setOperation(message.data)
 			}
@@ -188,8 +190,4 @@ export const GameScreen = () => {
 			})()}
 		</ImageBackground>
 	);
-}
-
-function addGameHistory(arg0: {}) {
-	throw new Error('Function not implemented.');
 }
