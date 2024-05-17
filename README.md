@@ -1,11 +1,12 @@
-# Spaces Operators
+<div align=center>
+<img style="border-radius: 5px;" src="https://github.com/CSTLLI/space-operators-react-native/blob/main/src/assets/game/title.png" alt="Logo" width="300">
+</div>
 
-## Overview
+<div align=center>
+Mobile game developed in React Native. <br>
+Cooperative game with a minimum of 2 players, where you have to coordinate the tasks you receive.
+</div>
 
-- Mobile game developed in React Native. 
-- Cooperative game with a minimum of 2 players, where you have to coordinate the tasks you receive.
-
-## Screenshots
 
 ## Installations and usage
 
