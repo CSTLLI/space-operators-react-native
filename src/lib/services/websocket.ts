@@ -1,5 +1,3 @@
-import useGame from "@/stores/Game.store";
-
 export const initWebSocket = (
   wsUrl: string,
   setWs: (ws: WebSocket) => void
